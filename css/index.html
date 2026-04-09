@@ -167,3 +167,101 @@
       flex-wrap: wrap;
       margin-bottom: 2rem;
     }
+.hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--blue-pale);
+      font-size: 0.88rem;
+    }
+
+    .hero-meta-item .dot {
+      width: 6px; height: 6px;
+      background: var(--yellow-main);
+      border-radius: 50%;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--yellow-main);
+      color: var(--blue-dark);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 12px 28px;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--yellow-dark); text-decoration: none; transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 12px 28px;
+      border-radius: var(--radius-md);
+      border: 2px solid rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.1s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--white); text-decoration: none; transform: translateY(-1px); }
+
+    /* Hero stats */
+    .hero-stats {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .stat-item { text-align: center; }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--yellow-main);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--blue-pale);
+      margin-top: 4px;
+    }
+    .stat-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    /* ===== MAIN LAYOUT ===== */
+    .main-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 5%;
+      display: grid;
+      grid-template-columns: var(--col-main) var(--col-side);
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* ===== ARTICLE CONTENT ===== */
+    .article-content { min-width: 0; }
+
+    .section-block { margin-bottom: 3rem; }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
