@@ -486,3 +486,95 @@
     </div>
   </aside>
 </main>
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">⚔ MLBBArticle</div>
+      <p class="footer-desc">Sumber informasi terpercaya untuk semua hal tentang Mobile Legends: Bang Bang. Dari panduan hero, tier list, hingga berita turnamen esports terkini.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Navigasi</h4>
+      <ul>
+        <li><a href="#tentang">Tentang Game</a></li>
+        <li><a href="#hero-list">Panduan Hero</a></li>
+        <li><a href="#tips">Tips & Trik</a></li>
+        <li><a href="#tier">Tier List</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    <span>© 2025 MLBBArticle. Artikel ini dibuat untuk tujuan edukasi.</span>
+    <span>Mobile Legends® adalah merek dagang Moonton.</span>
+  </div>
+</footer>
+
+<script>
+  const ICONS = {success:'✓',warning:'!',error:'✕',info:'i'};
+
+  function triggerToast(type,title,msg){
+    const container=document.getElementById('toast-container');
+    const toast=document.createElement('div');
+    toast.className=`toast toast-${type}`;
+    toast.innerHTML=`<div class="toast-icon">${ICONS[type]||'i'}</div><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div>`;
+    container.appendChild(toast);
+    setTimeout(()=>toast.remove(),4000);
+  }
+
+  // === HERO MODAL — anti-spam ===
+  let modalOpen = false;
+
+  function showHeroModal(roleClass, icon, title, desc, tip) {
+    if (modalOpen) return;
+    modalOpen = true;
+
+    document.getElementById('modal-icon-wrap').className = 'modal-role-icon-wrap ' + roleClass;
+    document.getElementById('modal-icon-wrap').textContent = icon;
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('hero-modal-desc').textContent = desc;
+    document.getElementById('modal-tip-text').textContent = tip;
+
+    const overlay = document.getElementById('hero-modal-overlay');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeHeroModal() {
+    const overlay = document.getElementById('hero-modal-overlay');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    modalOpen = false;
+  }
+
+  document.getElementById('hero-modal-overlay').addEventListener('click', function(e){
+    if (e.target === this) closeHeroModal();
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeHeroModal();
+  });
+
+  // Welcome toast
+  window.addEventListener('load', () => {
+    setTimeout(()=>triggerToast('info','Selamat Datang!','Klik kartu hero untuk info detail peran.'),600);
+  });
+
+  // Scroll toasts
+  const sectionToasts = {
+    'hero-list':['info','Panduan Hero','Klik kartu hero untuk melihat detail perannya!'],
+    'tips':['success','Tips & Strategi','Konsistensi adalah kunci naik rank!'],
+    'tier':['warning','Tier List','Data berubah tiap patch — selalu pantau meta!'],
+  };
+  const triggered = new Set();
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting && !triggered.has(e.target.id)){
+        triggered.add(e.target.id);
+        const t=sectionToasts[e.target.id];
+        if(t) setTimeout(()=>triggerToast(...t),300);
+      }
+    });
+  },{threshold:0.3});
+  document.querySelectorAll('#hero-list,#tips,#tier').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
