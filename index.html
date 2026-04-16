@@ -6,983 +6,579 @@
   <title>Mobile Legends: Bang Bang — Dunia Game Mobile Terbaik</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --blue-dark:   #0D2F5E;
-      --blue-main:   #1A4A9A;
-      --blue-mid:    #2262C6;
-      --blue-light:  #4A8AE8;
-      --blue-pale:   #D6E6FA;
-      --yellow-main: #F5C518;
-      --yellow-dark: #C49800;
-      --yellow-pale: #FFF6CC;
-      --white:       #FFFFFF;
-      --white-off:   #F4F8FF;
-      --text-dark:   #0D1B3E;
-      --text-mid:    #1E3A70;
-      --text-light:  #FFFFFF;
-      --golden:      1.618;
-      --col-main:    61.8%;
-      --col-side:    38.2%;
-      --radius-sm:   6px;
-      --radius-md:   12px;
-      --radius-lg:   20px;
+      --blue-dark:#0D2F5E;--blue-main:#1A4A9A;--blue-mid:#2262C6;--blue-light:#4A8AE8;
+      --blue-pale:#D6E6FA;--yellow-main:#F5C518;--yellow-dark:#C49800;--yellow-pale:#FFF6CC;
+      --white:#FFFFFF;--white-off:#F4F8FF;--text-dark:#0D1B3E;--text-mid:#1E3A70;
+      --col-main:61.8%;--col-side:38.2%;--radius-sm:6px;--radius-md:12px;--radius-lg:20px;
+      --shadow-z1:0 2px 6px rgba(13,47,94,0.08),0 1px 2px rgba(13,47,94,0.06);
+      --shadow-z2:0 6px 18px rgba(13,47,94,0.12),0 2px 6px rgba(13,47,94,0.08);
+      --shadow-z3:0 14px 36px rgba(13,47,94,0.18),0 4px 12px rgba(13,47,94,0.10);
+      --shadow-z4:0 24px 60px rgba(13,47,94,0.24),0 8px 20px rgba(13,47,94,0.14);
+      --shadow-yellow:0 8px 24px rgba(245,197,24,0.30);
+    }
+    html{scroll-behavior:smooth;}
+    body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background-color:var(--white-off);color:var(--text-dark);line-height:1.7;font-size:16px;}
+    @keyframes floatA{0%,100%{transform:translateY(0px)}50%{transform:translateY(-10px)}}
+    @keyframes floatB{0%,100%{transform:translateY(0px) rotate(0deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+    @keyframes floatC{0%,100%{transform:translateY(0px) scale(1)}50%{transform:translateY(-8px) scale(1.02)}}
+    @keyframes pulseGlow{0%,100%{box-shadow:var(--shadow-yellow)}50%{box-shadow:0 12px 32px rgba(245,197,24,0.50)}}
+    @keyframes toastIn{0%{opacity:0;transform:translateX(110%)}15%{opacity:1;transform:translateX(0)}80%{opacity:1;transform:translateX(0)}100%{opacity:0;transform:translateX(110%)}}
+    @keyframes toastProgress{from{transform:scaleX(1);transform-origin:left}to{transform:scaleX(0);transform-origin:left}}
+    @keyframes modalIn{0%{opacity:0;transform:scale(0.88) translateY(20px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+    @keyframes overlayIn{0%{opacity:0}100%{opacity:1}}
 
-      /* === LAYER / SHADOW SYSTEM === */
-      --shadow-z1: 0 2px 6px rgba(13,47,94,0.08), 0 1px 2px rgba(13,47,94,0.06);
-      --shadow-z2: 0 6px 18px rgba(13,47,94,0.12), 0 2px 6px rgba(13,47,94,0.08);
-      --shadow-z3: 0 14px 36px rgba(13,47,94,0.18), 0 4px 12px rgba(13,47,94,0.10);
-      --shadow-z4: 0 24px 60px rgba(13,47,94,0.24), 0 8px 20px rgba(13,47,94,0.14);
-      --shadow-float: 0 20px 50px rgba(13,47,94,0.22), 0 6px 16px rgba(13,47,94,0.12);
-      --shadow-yellow: 0 8px 24px rgba(245,197,24,0.30);
+    h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.2;}
+    h2{font-size:clamp(1.3rem,2.5vw,1.9rem);font-weight:700;line-height:1.3;}
+    h3{font-size:clamp(1rem,2vw,1.3rem);font-weight:600;}
+    p{font-size:1rem;line-height:1.8;color:var(--text-mid);}
+    a{color:var(--blue-mid);text-decoration:none;}
+    a:hover{text-decoration:underline;}
+
+    .navbar{background:var(--blue-dark);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100;border-bottom:3px solid var(--yellow-main);box-shadow:var(--shadow-z3);}
+    .navbar-brand{display:flex;align-items:center;gap:10px;color:var(--white);font-weight:800;font-size:1.2rem;letter-spacing:0.5px;}
+    .navbar-brand .logo-icon{width:36px;height:36px;background:var(--yellow-main);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:var(--blue-dark);animation:floatA 3.2s ease-in-out infinite;box-shadow:var(--shadow-yellow);}
+    .navbar-nav{display:flex;gap:2rem;list-style:none;}
+    .navbar-nav a{color:var(--blue-pale);font-size:0.9rem;font-weight:500;transition:color 0.2s;}
+    .navbar-nav a:hover{color:var(--yellow-main);text-decoration:none;}
+
+    .hero{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-main) 55%,var(--blue-mid) 100%);padding:6rem 5% 5rem;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;top:-80px;right:-80px;width:380px;height:380px;background:rgba(245,197,24,0.08);border-radius:50%;animation:floatB 6s ease-in-out infinite;}
+    .hero::after{content:'';position:absolute;bottom:-60px;left:20%;width:260px;height:260px;background:rgba(255,255,255,0.04);border-radius:50%;animation:floatA 5s ease-in-out infinite 1s;}
+    .hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:var(--col-main) var(--col-side);gap:3rem;align-items:center;position:relative;z-index:2;}
+    .hero-tag{display:inline-block;background:var(--yellow-main);color:var(--blue-dark);font-size:0.78rem;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:0.5px;margin-bottom:1.2rem;text-transform:uppercase;animation:pulseGlow 2.5s ease-in-out infinite;}
+    .hero h1{color:var(--white);margin-bottom:1rem;}
+    .hero-sub{color:var(--blue-pale);font-size:1.1rem;margin-bottom:2rem;line-height:1.7;}
+    .hero-meta{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem;}
+    .hero-meta-item{display:flex;align-items:center;gap:6px;color:var(--blue-pale);font-size:0.88rem;}
+    .hero-meta-item .dot{width:6px;height:6px;background:var(--yellow-main);border-radius:50%;}
+    .hero-cta{display:flex;gap:1rem;flex-wrap:wrap;}
+    .btn-primary{background:var(--yellow-main);color:var(--blue-dark);font-weight:700;font-size:0.95rem;padding:12px 28px;border-radius:var(--radius-md);border:none;cursor:pointer;transition:background 0.2s,transform 0.2s,box-shadow 0.2s;display:inline-block;box-shadow:var(--shadow-z2);}
+    .btn-primary:hover{background:var(--yellow-dark);text-decoration:none;transform:translateY(-3px);box-shadow:var(--shadow-z3);}
+    .btn-primary:active{transform:translateY(-1px);}
+    .btn-outline{background:transparent;color:var(--white);font-weight:600;font-size:0.95rem;padding:12px 28px;border-radius:var(--radius-md);border:2px solid rgba(255,255,255,0.35);cursor:pointer;transition:border-color 0.2s,transform 0.2s,box-shadow 0.2s;display:inline-block;}
+    .btn-outline:hover{border-color:var(--white);text-decoration:none;transform:translateY(-3px);box-shadow:0 8px 20px rgba(255,255,255,0.12);}
+    .hero-stats{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-lg);padding:2rem;display:flex;flex-direction:column;gap:1.5rem;box-shadow:var(--shadow-z2);animation:floatC 4.5s ease-in-out infinite;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+    .stat-item{text-align:center;}
+    .stat-number{font-size:2rem;font-weight:800;color:var(--yellow-main);line-height:1;}
+    .stat-label{font-size:0.82rem;color:var(--blue-pale);margin-top:4px;}
+    .stat-divider{height:1px;background:rgba(255,255,255,0.12);}
+
+    .main-wrap{max-width:1200px;margin:0 auto;padding:4rem 5%;display:grid;grid-template-columns:var(--col-main) var(--col-side);gap:3rem;align-items:start;}
+    .article-content{min-width:0;}
+    .section-block{margin-bottom:3rem;}
+    .section-label{display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
+    .section-label::before{content:'';display:block;width:4px;height:24px;background:var(--yellow-main);border-radius:2px;}
+    .section-label h2{color:var(--text-dark);}
+    .section-block p{margin-bottom:1rem;}
+
+    .role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0;}
+    .role-card{background:var(--white);border:1px solid var(--blue-pale);border-radius:var(--radius-md);padding:1.2rem 1rem;text-align:center;transition:border-color 0.2s,transform 0.25s cubic-bezier(.25,.8,.25,1),box-shadow 0.25s;box-shadow:var(--shadow-z1);cursor:pointer;}
+    .role-card:hover{border-color:var(--blue-main);transform:translateY(-6px);box-shadow:var(--shadow-z3);}
+    .role-icon{width:44px;height:44px;margin:0 auto 0.7rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;transition:transform 0.25s;}
+    .role-card:hover .role-icon{transform:scale(1.15) rotate(-6deg);}
+    .role-icon.tank{background:#EBF2FF;}
+    .role-icon.mage{background:#EDE5FF;}
+    .role-icon.marksman{background:#FFF3D6;}
+    .role-icon.fighter{background:#FFEBE5;}
+    .role-icon.assassin{background:#E5F7EF;}
+    .role-icon.support{background:#E5EFFF;}
+    .role-card h3{font-size:0.9rem;color:var(--text-dark);margin-bottom:4px;}
+    .role-card p{font-size:0.8rem;color:#5A7AB0;line-height:1.5;margin:0;}
+
+    .feature-list{list-style:none;margin:1rem 0;}
+    .feature-list li{display:flex;align-items:flex-start;gap:10px;padding:0.6rem 0;border-bottom:1px solid var(--blue-pale);font-size:0.95rem;color:var(--text-mid);transition:background 0.15s,padding-left 0.2s;border-radius:var(--radius-sm);}
+    .feature-list li:last-child{border-bottom:none;}
+    .feature-list li:hover{padding-left:6px;background:var(--white-off);}
+    .feature-list li::before{content:'';flex-shrink:0;width:8px;height:8px;background:var(--yellow-main);border-radius:50%;margin-top:7px;}
+
+    .tier-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:0.9rem;box-shadow:var(--shadow-z1);border-radius:var(--radius-md);overflow:hidden;}
+    .tier-table th{background:var(--blue-main);color:var(--white);padding:10px 14px;text-align:left;font-weight:600;}
+    .tier-table td{padding:10px 14px;border-bottom:1px solid var(--blue-pale);color:var(--text-mid);transition:background 0.15s;}
+    .tier-table tr:nth-child(even) td{background:var(--white-off);}
+    .tier-table tr:hover td{background:var(--blue-pale);}
+    .tier-table tbody tr{cursor:pointer;}
+    .badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:0.78rem;font-weight:700;}
+    .badge-s{background:#FFF3D6;color:#7A5800;}
+    .badge-a{background:#E5F0FF;color:#1A4A9A;}
+    .badge-b{background:#EEF8F0;color:#1A6B2E;}
+
+    .quote-block{background:var(--blue-dark);border-left:5px solid var(--yellow-main);border-radius:0 var(--radius-md) var(--radius-md) 0;padding:1.5rem 1.8rem;margin:2rem 0;box-shadow:var(--shadow-z2);transition:transform 0.25s,box-shadow 0.25s;}
+    .quote-block:hover{transform:translateX(4px);box-shadow:var(--shadow-z3);}
+    .quote-block p{color:var(--blue-pale);font-size:1.05rem;font-style:italic;line-height:1.75;margin:0;}
+
+    .tips-box{background:var(--yellow-pale);border:1px solid #E8C900;border-radius:var(--radius-md);padding:1.5rem;margin:1.5rem 0;box-shadow:var(--shadow-z1);transition:transform 0.25s,box-shadow 0.25s;}
+    .tips-box:hover{transform:translateY(-3px);box-shadow:var(--shadow-z2);}
+    .tips-box-title{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--blue-dark);margin-bottom:1rem;font-size:1rem;}
+    .tips-icon{width:24px;height:24px;background:var(--yellow-main);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--blue-dark);}
+    .tips-box ul{list-style:none;}
+    .tips-box ul li{color:var(--text-mid);font-size:0.92rem;padding:5px 0;padding-left:1.2rem;position:relative;}
+    .tips-box ul li::before{content:'→';position:absolute;left:0;color:var(--yellow-dark);font-weight:700;}
+
+    .sidebar{position:sticky;top:80px;}
+    .sidebar-card{background:var(--white);border:1px solid var(--blue-pale);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:1.5rem;box-shadow:var(--shadow-z2);transition:transform 0.3s cubic-bezier(.25,.8,.25,1),box-shadow 0.3s;}
+    .sidebar-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-z3);}
+    .sidebar-card:nth-child(1){animation:floatA 5s ease-in-out infinite;}
+    .sidebar-card:nth-child(2){animation:floatA 5.5s ease-in-out infinite 0.5s;}
+    .sidebar-card:nth-child(3){animation:floatA 6s ease-in-out infinite 1s;}
+    .sidebar-card-head{background:var(--blue-main);padding:0.85rem 1.2rem;display:flex;align-items:center;gap:8px;}
+    .sidebar-card-head h3{color:var(--white);font-size:0.95rem;font-weight:600;}
+    .sidebar-card-head-icon{width:22px;height:22px;background:rgba(245,197,24,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;}
+    .sidebar-card-body{padding:1.2rem;}
+    .toc-list{list-style:none;}
+    .toc-list li{padding:6px 0;border-bottom:1px solid var(--blue-pale);}
+    .toc-list li:last-child{border-bottom:none;}
+    .toc-list a{color:var(--text-mid);font-size:0.88rem;display:flex;align-items:center;gap:8px;transition:color 0.2s;}
+    .toc-list a:hover{color:var(--blue-mid);text-decoration:none;}
+    .toc-num{width:20px;height:20px;background:var(--blue-pale);color:var(--blue-main);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0;}
+    .fact-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--blue-pale);font-size:0.88rem;}
+    .fact-row:last-child{border-bottom:none;}
+    .fact-row .fact-key{color:#6B84B0;font-weight:500;}
+    .fact-row .fact-val{color:var(--text-dark);font-weight:600;text-align:right;}
+    .rating-box{text-align:center;padding:1rem 0;}
+    .rating-score{font-size:3rem;font-weight:900;color:var(--yellow-main);line-height:1;text-shadow:0 4px 12px rgba(245,197,24,0.35);}
+    .rating-label{font-size:0.85rem;color:#6B84B0;margin-top:4px;}
+    .stars{display:flex;justify-content:center;gap:4px;margin:8px 0;}
+    .star{width:16px;height:16px;background:var(--yellow-main);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);}
+    .star.half{opacity:0.4;}
+
+    .info-banner{background:var(--blue-main);padding:3rem 5%;}
+    .info-banner-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;}
+    .info-stat{text-align:center;padding:1.5rem;background:rgba(255,255,255,0.08);border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.12);box-shadow:var(--shadow-z1);transition:transform 0.3s,box-shadow 0.3s;}
+    .info-stat:hover{transform:translateY(-6px) scale(1.02);box-shadow:var(--shadow-z3);}
+    .info-stat .num{font-size:2.2rem;font-weight:900;color:var(--yellow-main);line-height:1;}
+    .info-stat .lbl{font-size:0.85rem;color:var(--blue-pale);margin-top:6px;}
+
+    .footer{background:var(--blue-dark);padding:3rem 5% 2rem;border-top:3px solid var(--yellow-main);box-shadow:0 -4px 20px rgba(13,47,94,0.3);}
+    .footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:var(--col-main) var(--col-side);gap:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.1);}
+    .footer-brand{color:var(--white);font-weight:800;font-size:1.1rem;margin-bottom:0.75rem;}
+    .footer-desc{color:var(--blue-pale);font-size:0.88rem;line-height:1.7;}
+    .footer-links h4{color:var(--yellow-main);font-size:0.85rem;letter-spacing:0.5px;margin-bottom:1rem;text-transform:uppercase;}
+    .footer-links ul{list-style:none;}
+    .footer-links ul li{margin-bottom:0.5rem;}
+    .footer-links ul li a{color:var(--blue-pale);font-size:0.88rem;transition:color 0.2s;}
+    .footer-links ul li a:hover{color:var(--yellow-main);text-decoration:none;}
+    .footer-copy{max-width:1200px;margin:1.5rem auto 0;color:#5A7AB0;font-size:0.82rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;}
+
+    /* === TOAST (untuk navigasi & tier list) === */
+    #toast-container{position:fixed;top:80px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none;}
+    .toast{display:flex;align-items:flex-start;gap:12px;background:var(--white);border-radius:var(--radius-md);padding:14px 18px;min-width:280px;max-width:340px;box-shadow:var(--shadow-z4);border-left:4px solid var(--blue-main);pointer-events:all;animation:toastIn 3.8s ease forwards;position:relative;overflow:hidden;}
+    .toast::after{content:'';position:absolute;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--yellow-main),transparent);width:100%;animation:toastProgress 3.8s linear forwards;}
+    .toast.toast-success{border-left-color:#1A9E5A;}
+    .toast.toast-warning{border-left-color:var(--yellow-dark);}
+    .toast.toast-error{border-left-color:#C0332B;}
+    .toast.toast-info{border-left-color:var(--blue-mid);}
+    .toast-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;}
+    .toast-success .toast-icon{background:#D4F5E5;color:#0F6E3A;}
+    .toast-warning .toast-icon{background:var(--yellow-pale);color:var(--yellow-dark);}
+    .toast-error .toast-icon{background:#FAE5E4;color:#C0332B;}
+    .toast-info .toast-icon{background:var(--blue-pale);color:var(--blue-mid);}
+    .toast-body{flex:1;}
+    .toast-title{font-size:0.88rem;font-weight:700;color:var(--text-dark);margin-bottom:2px;}
+    .toast-msg{font-size:0.82rem;color:#6B84B0;line-height:1.5;}
+
+    /* === HERO ROLE MODAL === */
+    #hero-modal-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(8,18,45,0.72);
+      backdrop-filter:blur(3px);
+      -webkit-backdrop-filter:blur(3px);
+      z-index:8888;
+      align-items:center;
+      justify-content:center;
+      animation:overlayIn 0.25s ease;
+    }
+    #hero-modal-overlay.active{display:flex;}
+
+    #hero-modal{
+      background:var(--white);
+      border-radius:var(--radius-lg);
+      padding:2.2rem 2rem 1.8rem;
+      max-width:420px;
+      width:90%;
+      box-shadow:var(--shadow-z4);
+      position:relative;
+      animation:modalIn 0.3s cubic-bezier(.25,.8,.25,1);
+      border-top:4px solid var(--yellow-main);
     }
 
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background-color: var(--white-off);
-      color: var(--text-dark);
-      line-height: 1.7;
-      font-size: 16px;
+    #hero-modal-close{
+      position:absolute;
+      top:14px;right:16px;
+      width:32px;height:32px;
+      background:var(--blue-pale);
+      border:none;
+      border-radius:50%;
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      font-size:16px;
+      color:var(--blue-dark);
+      font-weight:700;
+      transition:background 0.2s,transform 0.2s;
+      line-height:1;
     }
+    #hero-modal-close:hover{background:var(--blue-light);color:var(--white);transform:scale(1.1);}
 
-    /* === FLOATING ANIMATION KEYFRAMES === */
-    @keyframes floatA {
-      0%, 100% { transform: translateY(0px); }
-      50%       { transform: translateY(-10px); }
+    .modal-role-icon-wrap{
+      width:64px;height:64px;
+      border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:30px;
+      margin:0 auto 1rem;
     }
-    @keyframes floatB {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50%       { transform: translateY(-14px) rotate(2deg); }
+    .modal-role-icon-wrap.tank{background:#EBF2FF;}
+    .modal-role-icon-wrap.mage{background:#EDE5FF;}
+    .modal-role-icon-wrap.marksman{background:#FFF3D6;}
+    .modal-role-icon-wrap.fighter{background:#FFEBE5;}
+    .modal-role-icon-wrap.assassin{background:#E5F7EF;}
+    .modal-role-icon-wrap.support{background:#E5EFFF;}
+
+    #hero-modal h3{text-align:center;color:var(--text-dark);font-size:1.3rem;margin-bottom:0.4rem;}
+    #hero-modal-desc{text-align:center;color:var(--text-mid);font-size:0.95rem;line-height:1.7;margin:0;}
+    #hero-modal-tip{
+      margin-top:1.2rem;
+      background:var(--yellow-pale);
+      border:1px solid #E8C900;
+      border-radius:var(--radius-md);
+      padding:0.9rem 1rem;
+      font-size:0.88rem;
+      color:var(--blue-dark);
+      line-height:1.6;
     }
-    @keyframes floatC {
-      0%, 100% { transform: translateY(0px) scale(1); }
-      50%       { transform: translateY(-8px) scale(1.02); }
+    #hero-modal-tip strong{color:var(--yellow-dark);}
+
+    .modal-footer-btn{
+      margin-top:1.5rem;
+      display:flex;
+      justify-content:center;
     }
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: var(--shadow-yellow); }
-      50%       { box-shadow: 0 12px 32px rgba(245,197,24,0.50); }
+    .modal-footer-btn button{
+      background:var(--blue-main);
+      color:var(--white);
+      border:none;
+      padding:10px 32px;
+      border-radius:var(--radius-md);
+      font-weight:700;
+      font-size:0.95rem;
+      cursor:pointer;
+      transition:background 0.2s,transform 0.2s;
     }
-    @keyframes toastIn {
-      0%   { opacity: 0; transform: translateX(110%); }
-      15%  { opacity: 1; transform: translateX(0); }
-      80%  { opacity: 1; transform: translateX(0); }
-      100% { opacity: 0; transform: translateX(110%); }
+    .modal-footer-btn button:hover{background:var(--blue-dark);transform:translateY(-2px);}
+
+    .cta-download{background:var(--blue-main);border-radius:var(--radius-lg);padding:1.5rem;text-align:center;box-shadow:var(--shadow-z2);animation:floatA 5.8s ease-in-out infinite 1.2s;transition:transform 0.3s,box-shadow 0.3s;}
+    .cta-download:hover{transform:translateY(-6px);box-shadow:var(--shadow-z4);animation-play-state:paused;}
+    .cta-download .btn-primary,.cta-download .btn-outline{display:block;border-radius:8px;}
+    .cta-download .btn-primary{margin-bottom:0.6rem;}
+
+    @media(max-width:900px){
+      .hero-inner,.main-wrap,.footer-inner,.info-banner-inner{grid-template-columns:1fr;}
+      .hero-stats{flex-direction:row;flex-wrap:wrap;justify-content:center;animation:none;}
+      .hero-stats .stat-divider{display:none;}
+      .sidebar{position:static;}
+      .sidebar-card{animation:none;}
+      .role-grid{grid-template-columns:repeat(2,1fr);}
+      .info-banner-inner{grid-template-columns:repeat(2,1fr);}
+      .navbar-nav{display:none;}
+      #toast-container{right:12px;left:12px;top:72px;}
+      .toast{min-width:unset;max-width:100%;}
     }
-    @keyframes toastInBottom {
-      0%   { opacity: 0; transform: translateY(80px) scale(0.95); }
-      15%  { opacity: 1; transform: translateY(0) scale(1); }
-      80%  { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(80px) scale(0.95); }
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* ===== TYPOGRAPHY ===== */
-    h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; line-height: 1.2; }
-    h2 { font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-weight: 700; line-height: 1.3; }
-    h3 { font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 600; }
-    p  { font-size: 1rem; line-height: 1.8; color: var(--text-mid); }
-    a  { color: var(--blue-mid); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* ===== NAVBAR — Layer Z3 ===== */
-    .navbar {
-      background: var(--blue-dark);
-      padding: 0 5%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 3px solid var(--yellow-main);
-      box-shadow: var(--shadow-z3);
-    }
-
-    .navbar-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--white);
-      font-weight: 800;
-      font-size: 1.2rem;
-      letter-spacing: 0.5px;
-    }
-
-    /* Logo melayyyyyying */
-    .navbar-brand .logo-icon {
-      width: 36px; height: 36px;
-      background: var(--yellow-main);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; font-weight: 900; color: var(--blue-dark);
-      animation: floatA 3.2s ease-in-out infinite;
-      box-shadow: var(--shadow-yellow);
-    }
-
-    .navbar-nav {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-    .navbar-nav a {
-      color: var(--blue-pale);
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .navbar-nav a:hover { color: var(--yellow-main); text-decoration: none; }
-
-    /* ===== HERO ===== */
-    .hero {
-      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-main) 55%, var(--blue-mid) 100%);
-      padding: 6rem 5% 5rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Floating decorative orbs — Layer Z1 */
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -80px; right: -80px;
-      width: 380px; height: 380px;
-      background: rgba(245,197,24,0.08);
-      border-radius: 50%;
-      animation: floatB 6s ease-in-out infinite;
-    }
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -60px; left: 20%;
-      width: 260px; height: 260px;
-      background: rgba(255,255,255,0.04);
-      border-radius: 50%;
-      animation: floatA 5s ease-in-out infinite 1s;
-    }
-
-    .hero-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: var(--col-main) var(--col-side);
-      gap: 3rem;
-      align-items: center;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-tag {
-      display: inline-block;
-      background: var(--yellow-main);
-      color: var(--blue-dark);
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 5px 14px;
-      border-radius: 20px;
-      letter-spacing: 0.5px;
-      margin-bottom: 1.2rem;
-      text-transform: uppercase;
-      animation: pulseGlow 2.5s ease-in-out infinite;
-    }
-
-    .hero h1 { color: var(--white); margin-bottom: 1rem; }
-    .hero-sub { color: var(--blue-pale); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.7; }
-
-    .hero-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
-    .hero-meta-item { display: flex; align-items: center; gap: 6px; color: var(--blue-pale); font-size: 0.88rem; }
-    .hero-meta-item .dot { width: 6px; height: 6px; background: var(--yellow-main); border-radius: 50%; }
-
-    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-    .btn-primary {
-      background: var(--yellow-main);
-      color: var(--blue-dark);
-      font-weight: 700; font-size: 0.95rem;
-      padding: 12px 28px;
-      border-radius: var(--radius-md);
-      border: none; cursor: pointer;
-      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-      display: inline-block;
-      box-shadow: var(--shadow-z2);
-    }
-    .btn-primary:hover {
-      background: var(--yellow-dark);
-      text-decoration: none;
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-z3);
-    }
-    .btn-primary:active { transform: translateY(-1px); }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--white); font-weight: 600; font-size: 0.95rem;
-      padding: 12px 28px;
-      border-radius: var(--radius-md);
-      border: 2px solid rgba(255,255,255,0.35);
-      cursor: pointer;
-      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-      display: inline-block;
-    }
-    .btn-outline:hover {
-      border-color: var(--white);
-      text-decoration: none;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255,255,255,0.12);
-    }
-
-    /* Hero stats card — Layer Z2, floating */
-    .hero-stats {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      box-shadow: var(--shadow-z2);
-      animation: floatC 4.5s ease-in-out infinite;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-    }
-
-    .stat-item { text-align: center; }
-    .stat-number { font-size: 2rem; font-weight: 800; color: var(--yellow-main); line-height: 1; }
-    .stat-label  { font-size: 0.82rem; color: var(--blue-pale); margin-top: 4px; }
-    .stat-divider { height: 1px; background: rgba(255,255,255,0.12); }
-
-    /* ===== MAIN LAYOUT ===== */
-    .main-wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 4rem 5%;
-      display: grid;
-      grid-template-columns: var(--col-main) var(--col-side);
-      gap: 3rem;
-      align-items: start;
-    }
-
-    /* ===== ARTICLE CONTENT ===== */
-    .article-content { min-width: 0; }
-
-    .section-block { margin-bottom: 3rem; }
-
-    .section-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 1rem;
-    }
-    .section-label::before {
-      content: '';
-      display: block;
-      width: 4px; height: 24px;
-      background: var(--yellow-main);
-      border-radius: 2px;
-    }
-    .section-label h2 { color: var(--text-dark); }
-    .section-block p { margin-bottom: 1rem; }
-
-    /* Role Grid — cards with layer Z1 → Z2 on hover */
-    .role-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin: 1.5rem 0;
-    }
-
-    .role-card {
-      background: var(--white);
-      border: 1px solid var(--blue-pale);
-      border-radius: var(--radius-md);
-      padding: 1.2rem 1rem;
-      text-align: center;
-      transition: border-color 0.2s, transform 0.25s cubic-bezier(.25,.8,.25,1), box-shadow 0.25s;
-      box-shadow: var(--shadow-z1);
-    }
-    .role-card:hover {
-      border-color: var(--blue-main);
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-z3);
-    }
-
-    .role-icon {
-      width: 44px; height: 44px;
-      margin: 0 auto 0.7rem;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-      transition: transform 0.25s;
-    }
-    .role-card:hover .role-icon { transform: scale(1.15) rotate(-6deg); }
-
-    .role-icon.tank     { background: #EBF2FF; }
-    .role-icon.mage     { background: #EDE5FF; }
-    .role-icon.marksman { background: #FFF3D6; }
-    .role-icon.fighter  { background: #FFEBE5; }
-    .role-icon.assassin { background: #E5F7EF; }
-    .role-icon.support  { background: #E5EFFF; }
-
-    .role-card h3 { font-size: 0.9rem; color: var(--text-dark); margin-bottom: 4px; }
-    .role-card p  { font-size: 0.8rem; color: #5A7AB0; line-height: 1.5; margin: 0; }
-
-    /* Feature List */
-    .feature-list { list-style: none; margin: 1rem 0; }
-    .feature-list li {
-      display: flex; align-items: flex-start; gap: 10px;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid var(--blue-pale);
-      font-size: 0.95rem; color: var(--text-mid);
-      transition: background 0.15s, padding-left 0.2s;
-      border-radius: var(--radius-sm);
-    }
-    .feature-list li:last-child { border-bottom: none; }
-    .feature-list li:hover { padding-left: 6px; background: var(--white-off); }
-    .feature-list li::before {
-      content: '';
-      flex-shrink: 0;
-      width: 8px; height: 8px;
-      background: var(--yellow-main);
-      border-radius: 50%;
-      margin-top: 7px;
-    }
-
-    /* Tier Table */
-    .tier-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; box-shadow: var(--shadow-z1); border-radius: var(--radius-md); overflow: hidden; }
-    .tier-table th { background: var(--blue-main); color: var(--white); padding: 10px 14px; text-align: left; font-weight: 600; }
-    .tier-table td { padding: 10px 14px; border-bottom: 1px solid var(--blue-pale); color: var(--text-mid); transition: background 0.15s; }
-    .tier-table tr:nth-child(even) td { background: var(--white-off); }
-    .tier-table tr:hover td { background: var(--blue-pale); }
-
-    .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 700; }
-    .badge-s { background: #FFF3D6; color: #7A5800; }
-    .badge-a { background: #E5F0FF; color: #1A4A9A; }
-    .badge-b { background: #EEF8F0; color: #1A6B2E; }
-
-    /* Quote Block — Layer Z1 */
-    .quote-block {
-      background: var(--blue-dark);
-      border-left: 5px solid var(--yellow-main);
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
-      padding: 1.5rem 1.8rem;
-      margin: 2rem 0;
-      box-shadow: var(--shadow-z2);
-      transition: transform 0.25s, box-shadow 0.25s;
-    }
-    .quote-block:hover { transform: translateX(4px); box-shadow: var(--shadow-z3); }
-    .quote-block p { color: var(--blue-pale); font-size: 1.05rem; font-style: italic; line-height: 1.75; margin: 0; }
-
-    /* Tips Box — Layer Z1 */
-    .tips-box {
-      background: var(--yellow-pale);
-      border: 1px solid #E8C900;
-      border-radius: var(--radius-md);
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-      box-shadow: var(--shadow-z1);
-      transition: transform 0.25s, box-shadow 0.25s;
-    }
-    .tips-box:hover { transform: translateY(-3px); box-shadow: var(--shadow-z2); }
-    .tips-box-title { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--blue-dark); margin-bottom: 1rem; font-size: 1rem; }
-    .tips-icon { width: 24px; height: 24px; background: var(--yellow-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--blue-dark); }
-    .tips-box ul { list-style: none; }
-    .tips-box ul li { color: var(--text-mid); font-size: 0.92rem; padding: 5px 0; padding-left: 1.2rem; position: relative; }
-    .tips-box ul li::before { content: '→'; position: absolute; left: 0; color: var(--yellow-dark); font-weight: 700; }
-
-    /* ===== SIDEBAR — Layer Z2 floating ===== */
-    .sidebar { position: sticky; top: 80px; }
-
-    /* Sidebar cards floating stagger */
-    .sidebar-card {
-      background: var(--white);
-      border: 1px solid var(--blue-pale);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-bottom: 1.5rem;
-      box-shadow: var(--shadow-z2);
-      transition: transform 0.3s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s;
-    }
-    .sidebar-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-z3); }
-
-    .sidebar-card:nth-child(1) { animation: floatA 5s ease-in-out infinite; }
-    .sidebar-card:nth-child(2) { animation: floatA 5.5s ease-in-out infinite 0.5s; }
-    .sidebar-card:nth-child(3) { animation: floatA 6s ease-in-out infinite 1s; }
-
-    .sidebar-card-head {
-      background: var(--blue-main);
-      padding: 0.85rem 1.2rem;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .sidebar-card-head h3 { color: var(--white); font-size: 0.95rem; font-weight: 600; }
-    .sidebar-card-head-icon {
-      width: 22px; height: 22px;
-      background: rgba(245,197,24,0.25);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px;
-    }
-    .sidebar-card-body { padding: 1.2rem; }
-
-    /* TOC */
-    .toc-list { list-style: none; }
-    .toc-list li { padding: 6px 0; border-bottom: 1px solid var(--blue-pale); }
-    .toc-list li:last-child { border-bottom: none; }
-    .toc-list a { color: var(--text-mid); font-size: 0.88rem; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
-    .toc-list a:hover { color: var(--blue-mid); text-decoration: none; }
-    .toc-num { width: 20px; height: 20px; background: var(--blue-pale); color: var(--blue-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }
-
-    /* Quick Facts */
-    .fact-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--blue-pale); font-size: 0.88rem; }
-    .fact-row:last-child { border-bottom: none; }
-    .fact-row .fact-key { color: #6B84B0; font-weight: 500; }
-    .fact-row .fact-val { color: var(--text-dark); font-weight: 600; text-align: right; }
-
-    /* Rating */
-    .rating-box { text-align: center; padding: 1rem 0; }
-    .rating-score { font-size: 3rem; font-weight: 900; color: var(--yellow-main); line-height: 1; text-shadow: 0 4px 12px rgba(245,197,24,0.35); }
-    .rating-label { font-size: 0.85rem; color: #6B84B0; margin-top: 4px; }
-    .stars { display: flex; justify-content: center; gap: 4px; margin: 8px 0; }
-    .star { width: 16px; height: 16px; background: var(--yellow-main); clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
-    .star.half { opacity: 0.4; }
-
-    /* ===== INFO BANNER ===== */
-    .info-banner { background: var(--blue-main); padding: 3rem 5%; }
-    .info-banner-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-    .info-stat {
-      text-align: center;
-      padding: 1.5rem;
-      background: rgba(255,255,255,0.08);
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: var(--shadow-z1);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .info-stat:hover { transform: translateY(-6px) scale(1.02); box-shadow: var(--shadow-z3); }
-    .info-stat .num { font-size: 2.2rem; font-weight: 900; color: var(--yellow-main); line-height: 1; }
-    .info-stat .lbl { font-size: 0.85rem; color: var(--blue-pale); margin-top: 6px; }
-
-    /* ===== FOOTER ===== */
-    .footer { background: var(--blue-dark); padding: 3rem 5% 2rem; border-top: 3px solid var(--yellow-main); box-shadow: 0 -4px 20px rgba(13,47,94,0.3); }
-    .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: var(--col-main) var(--col-side); gap: 3rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .footer-brand { color: var(--white); font-weight: 800; font-size: 1.1rem; margin-bottom: 0.75rem; }
-    .footer-desc { color: var(--blue-pale); font-size: 0.88rem; line-height: 1.7; }
-    .footer-links h4 { color: var(--yellow-main); font-size: 0.85rem; letter-spacing: 0.5px; margin-bottom: 1rem; text-transform: uppercase; }
-    .footer-links ul { list-style: none; }
-    .footer-links ul li { margin-bottom: 0.5rem; }
-    .footer-links ul li a { color: var(--blue-pale); font-size: 0.88rem; transition: color 0.2s; }
-    .footer-links ul li a:hover { color: var(--yellow-main); text-decoration: none; }
-    .footer-copy { max-width: 1200px; margin: 1.5rem auto 0; color: #5A7AB0; font-size: 0.82rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
-
-    /* ===== TOAST NOTIFICATION SYSTEM ===== */
-    #toast-container {
-      position: fixed;
-      top: 80px;
-      right: 24px;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      pointer-events: none;
-    }
-
-    .toast {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      background: var(--white);
-      border-radius: var(--radius-md);
-      padding: 14px 18px;
-      min-width: 280px;
-      max-width: 340px;
-      box-shadow: var(--shadow-z4);
-      border-left: 4px solid var(--blue-main);
-      pointer-events: all;
-      animation: toastIn 3.8s ease forwards;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .toast::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--yellow-main), transparent);
-      width: 100%;
-      animation: toastProgress 3.8s linear forwards;
-    }
-
-    @keyframes toastProgress {
-      from { transform: scaleX(1); transform-origin: left; }
-      to   { transform: scaleX(0); transform-origin: left; }
-    }
-
-    .toast.toast-success { border-left-color: #1A9E5A; }
-    .toast.toast-warning { border-left-color: var(--yellow-dark); }
-    .toast.toast-error   { border-left-color: #C0332B; }
-    .toast.toast-info    { border-left-color: var(--blue-mid); }
-
-    .toast-icon {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      font-size: 13px;
-      font-weight: 700;
-    }
-    .toast-success .toast-icon { background: #D4F5E5; color: #0F6E3A; }
-    .toast-warning .toast-icon { background: var(--yellow-pale); color: var(--yellow-dark); }
-    .toast-error   .toast-icon { background: #FAE5E4; color: #C0332B; }
-    .toast-info    .toast-icon { background: var(--blue-pale); color: var(--blue-mid); }
-
-    .toast-body { flex: 1; }
-    .toast-title { font-size: 0.88rem; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
-    .toast-msg   { font-size: 0.82rem; color: #6B84B0; line-height: 1.5; }
-
-    /* CTA Download floating */
-    .cta-download {
-      background: var(--blue-main);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
-      text-align: center;
-      box-shadow: var(--shadow-z2);
-      animation: floatA 5.8s ease-in-out infinite 1.2s;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .cta-download:hover { transform: translateY(-6px); box-shadow: var(--shadow-z4); animation-play-state: paused; }
-    .cta-download .btn-primary,
-    .cta-download .btn-outline { display: block; border-radius: 8px; }
-    .cta-download .btn-primary { margin-bottom: 0.6rem; }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 900px) {
-      .hero-inner, .main-wrap, .footer-inner, .info-banner-inner { grid-template-columns: 1fr; }
-      .hero-stats { flex-direction: row; flex-wrap: wrap; justify-content: center; animation: none; }
-      .hero-stats .stat-divider { display: none; }
-      .sidebar { position: static; }
-      .sidebar-card { animation: none; }
-      .role-grid { grid-template-columns: repeat(2, 1fr); }
-      .info-banner-inner { grid-template-columns: repeat(2, 1fr); }
-      .navbar-nav { display: none; }
-      #toast-container { right: 12px; left: 12px; top: 72px; }
-      .toast { min-width: unset; max-width: 100%; }
-    }
-    @media (max-width: 480px) {
-      .role-grid { grid-template-columns: 1fr 1fr; }
-      .hero { padding: 4rem 5% 3rem; }
+    @media(max-width:480px){
+      .role-grid{grid-template-columns:1fr 1fr;}
+      .hero{padding:4rem 5% 3rem;}
     }
   </style>
 </head>
 <body>
 
-  <!-- TOAST CONTAINER -->
-  <div id="toast-container"></div>
+<div id="toast-container"></div>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="navbar-brand">
-      <div class="logo-icon">ML</div>
-      <span>MLBBArticle</span>
+<!-- HERO ROLE MODAL -->
+<div id="hero-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div id="hero-modal">
+    <button id="hero-modal-close" aria-label="Tutup" onclick="closeHeroModal()">✕</button>
+    <div id="modal-icon-wrap" class="modal-role-icon-wrap tank">🛡️</div>
+    <h3 id="modal-title">Tank</h3>
+    <p id="hero-modal-desc">Penahan garis depan, memiliki HP tinggi dan pertahanan kuat.</p>
+    <div id="hero-modal-tip">💡 <strong>Tips:</strong> <span id="modal-tip-text">Cocok untuk pemain yang suka bertahan dan memimpin tim.</span></div>
+    <div class="modal-footer-btn">
+      <button onclick="closeHeroModal()">Mengerti!</button>
     </div>
-    <ul class="navbar-nav">
-      <li><a href="#tentang" onclick="triggerToast('info','Navigasi','Menuju bagian Tentang Game...')">Tentang</a></li>
-      <li><a href="#hero-list" onclick="triggerToast('info','Navigasi','Menuju bagian Panduan Hero...')">Hero</a></li>
-      <li><a href="#tips" onclick="triggerToast('success','Kiat Jitu','Tips ranked siap dibaca!')">Tips</a></li>
-      <li><a href="#tier" onclick="triggerToast('warning','Tier List','Data diperbarui tiap patch!')">Tier List</a></li>
-    </ul>
-  </nav>
+  </div>
+</div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div>
-        <span class="hero-tag">Game Mobile Terpopuler</span>
-        <h1>Mobile Legends:<br/>Bang Bang</h1>
-        <p class="hero-sub">
-          MOBA terdepan di Asia Tenggara yang mempertemukan jutaan pemain
-          dalam pertarungan strategi 5v5 yang seru dan kompetitif.
-        </p>
-        <div class="hero-meta">
-          <span class="hero-meta-item"><span class="dot"></span> Penulis: Redaksi MLBBArticle</span>
-          <span class="hero-meta-item"><span class="dot"></span> 09 April 2025</span>
-          <span class="hero-meta-item"><span class="dot"></span> 8 menit baca</span>
-        </div>
-        <div class="hero-cta">
-          <a href="#tentang" class="btn-primary" onclick="triggerToast('success','Selamat Membaca!','Artikel lengkap MLBB siap untuk Anda.')">Baca Artikel</a>
-          <a href="#tier" class="btn-outline" onclick="triggerToast('warning','Tier List','Meta season ini cukup berubah, simak baik-baik!')">Lihat Tier List</a>
-        </div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    <div class="logo-icon">ML</div>
+    <span>MLBBArticle</span>
+  </div>
+  <ul class="navbar-nav">
+    <li><a href="#tentang" onclick="triggerToast('info','Navigasi','Menuju bagian Tentang Game...')">Tentang</a></li>
+    <li><a href="#hero-list" onclick="triggerToast('info','Navigasi','Menuju bagian Panduan Hero...')">Hero</a></li>
+    <li><a href="#tips" onclick="triggerToast('success','Kiat Jitu','Tips ranked siap dibaca!')">Tips</a></li>
+    <li><a href="#tier" onclick="triggerToast('warning','Tier List','Data diperbarui tiap patch!')">Tier List</a></li>
+  </ul>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="hero-tag">Game Mobile Terpopuler</span>
+      <h1>Mobile Legends:<br/>Bang Bang</h1>
+      <p class="hero-sub">MOBA terdepan di Asia Tenggara yang mempertemukan jutaan pemain dalam pertarungan strategi 5v5 yang seru dan kompetitif.</p>
+      <div class="hero-meta">
+        <span class="hero-meta-item"><span class="dot"></span> Penulis: Redaksi MLBBArticle</span>
+        <span class="hero-meta-item"><span class="dot"></span> 09 April 2025</span>
+        <span class="hero-meta-item"><span class="dot"></span> 8 menit baca</span>
       </div>
-      <div class="hero-stats">
-        <div class="stat-item">
-          <div class="stat-number">100M+</div>
-          <div class="stat-label">Pemain Aktif Global</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <div class="stat-number">120+</div>
-          <div class="stat-label">Hero Tersedia</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <div class="stat-number">#1</div>
-          <div class="stat-label">MOBA Mobile Asia</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <div class="stat-number">10</div>
-          <div class="stat-label">Tahun Beroperasi</div>
-        </div>
+      <div class="hero-cta">
+        <a href="#tentang" class="btn-primary" onclick="triggerToast('success','Selamat Membaca!','Artikel lengkap MLBB siap untuk Anda.')">Baca Artikel</a>
+        <a href="#tier" class="btn-outline" onclick="triggerToast('warning','Tier List','Meta season ini cukup berubah, simak baik-baik!')">Lihat Tier List</a>
       </div>
     </div>
-  </section>
-
-  <!-- INFO BANNER -->
-  <section class="info-banner">
-    <div class="info-banner-inner">
-      <div class="info-stat">
-        <div class="num">M-World</div>
-        <div class="lbl">Turnamen Dunia Tahunan</div>
-      </div>
-      <div class="info-stat">
-        <div class="num">iOS & Android</div>
-        <div class="lbl">Platform Tersedia</div>
-      </div>
-      <div class="info-stat">
-        <div class="num">Free</div>
-        <div class="lbl">Gratis Dimainkan</div>
-      </div>
-      <div class="info-stat">
-        <div class="num">5v5</div>
-        <div class="lbl">Format Pertarungan</div>
-      </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-number">100M+</div><div class="stat-label">Pemain Aktif Global</div></div>
+      <div class="stat-divider"></div>
+      <div class="stat-item"><div class="stat-number">120+</div><div class="stat-label">Hero Tersedia</div></div>
+      <div class="stat-divider"></div>
+      <div class="stat-item"><div class="stat-number">#1</div><div class="stat-label">MOBA Mobile Asia</div></div>
+      <div class="stat-divider"></div>
+      <div class="stat-item"><div class="stat-number">10</div><div class="stat-label">Tahun Beroperasi</div></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- MAIN CONTENT -->
-  <main class="main-wrap">
+<!-- INFO BANNER -->
+<section class="info-banner">
+  <div class="info-banner-inner">
+    <div class="info-stat"><div class="num">M-World</div><div class="lbl">Turnamen Dunia Tahunan</div></div>
+    <div class="info-stat"><div class="num">iOS & Android</div><div class="lbl">Platform Tersedia</div></div>
+    <div class="info-stat"><div class="num">Free</div><div class="lbl">Gratis Dimainkan</div></div>
+    <div class="info-stat"><div class="num">5v5</div><div class="lbl">Format Pertarungan</div></div>
+  </div>
+</section>
 
-    <article class="article-content">
+<main class="main-wrap">
+  <article class="article-content">
 
-      <!-- TENTANG -->
-      <section class="section-block" id="tentang">
-        <div class="section-label"><h2>Apa Itu Mobile Legends?</h2></div>
-        <p>
-          Mobile Legends: Bang Bang (MLBB) adalah game MOBA (Multiplayer Online Battle Arena)
-          yang dikembangkan oleh Moonton dan dirilis pada tahun 2016. Sejak peluncurannya,
-          MLBB berhasil merebut hati jutaan pemain di seluruh dunia, terutama di kawasan Asia Tenggara.
-        </p>
-        <p>
-          Dalam setiap pertandingan, dua tim beranggotakan 5 pemain bersaing untuk menghancurkan
-          <strong>Nexus</strong> (markas inti) lawan. Pemain mengendalikan karakter yang disebut
-          <strong>Hero</strong>, masing-masing dengan kemampuan unik dan peran strategis berbeda.
-          Pertandingan rata-rata berlangsung antara 10 hingga 20 menit, menjadikannya ideal
-          untuk sesi gaming cepat di perangkat mobile.
-        </p>
-        <div class="quote-block">
-          <p>
-            "Mobile Legends bukan sekadar game — ini adalah arena di mana strategi,
-            kerja tim, dan refleks bertemu dalam harmoni sempurna di genggaman tangan Anda."
-          </p>
+    <section class="section-block" id="tentang">
+      <div class="section-label"><h2>Apa Itu Mobile Legends?</h2></div>
+      <p>Mobile Legends: Bang Bang (MLBB) adalah game MOBA (Multiplayer Online Battle Arena) yang dikembangkan oleh Moonton dan dirilis pada tahun 2016. Sejak peluncurannya, MLBB berhasil merebut hati jutaan pemain di seluruh dunia, terutama di kawasan Asia Tenggara.</p>
+      <p>Dalam setiap pertandingan, dua tim beranggotakan 5 pemain bersaing untuk menghancurkan <strong>Nexus</strong> (markas inti) lawan. Pemain mengendalikan karakter yang disebut <strong>Hero</strong>, masing-masing dengan kemampuan unik dan peran strategis berbeda. Pertandingan rata-rata berlangsung antara 10 hingga 20 menit, menjadikannya ideal untuk sesi gaming cepat di perangkat mobile.</p>
+      <div class="quote-block"><p>"Mobile Legends bukan sekadar game — ini adalah arena di mana strategi, kerja tim, dan refleks bertemu dalam harmoni sempurna di genggaman tangan Anda."</p></div>
+    </section>
+
+    <section class="section-block" id="hero-list">
+      <div class="section-label"><h2>Peran Hero dalam Permainan</h2></div>
+      <p>Setiap hero memiliki peran spesifik yang menentukan posisi dan kontribusinya di dalam pertandingan. Memahami peran ini adalah kunci kemenangan tim.</p>
+      <div class="role-grid">
+        <div class="role-card" onclick="showHeroModal('tank','🛡️','Tank','Penahan garis depan, memiliki HP tinggi dan pertahanan kuat.','Cocok untuk pemain yang suka bertahan dan memimpin tim ke dalam pertarungan.')">
+          <div class="role-icon tank">🛡️</div><h3>Tank</h3><p>Penahan garis depan, memiliki HP tinggi dan pertahanan kuat.</p>
         </div>
-      </section>
-
-      <!-- HERO ROLES -->
-      <section class="section-block" id="hero-list">
-        <div class="section-label"><h2>Peran Hero dalam Permainan</h2></div>
-        <p>
-          Setiap hero memiliki peran spesifik yang menentukan posisi dan kontribusinya
-          di dalam pertandingan. Memahami peran ini adalah kunci kemenangan tim.
-        </p>
-        <div class="role-grid">
-          <div class="role-card" onclick="triggerToast('info','Tank','Cocok untuk pemain yang suka bertahan dan memimpin tim.')">
-            <div class="role-icon tank">🛡️</div>
-            <h3>Tank</h3>
-            <p>Penahan garis depan, memiliki HP tinggi dan pertahanan kuat.</p>
-          </div>
-          <div class="role-card" onclick="triggerToast('info','Mage','Damage besar di area, mematikan dalam teamfight.')">
-            <div class="role-icon mage">🔮</div>
-            <h3>Mage</h3>
-            <p>Penyihir dengan damage area besar, cocok untuk teamfight.</p>
-          </div>
-          <div class="role-card" onclick="triggerToast('info','Marksman','Sabar dan posisikan diri dengan baik di late game.')">
-            <div class="role-icon marksman">🏹</div>
-            <h3>Marksman</h3>
-            <p>Damage fisik jarak jauh, andalan dalam late game.</p>
-          </div>
-          <div class="role-card" onclick="triggerToast('info','Fighter','Fleksibel, bisa masuk ke lane manapun.')">
-            <div class="role-icon fighter">⚔️</div>
-            <h3>Fighter</h3>
-            <p>Seimbang antara serangan dan pertahanan, serbaguna.</p>
-          </div>
-          <div class="role-card" onclick="triggerToast('warning','Assassin','Hati-hati! Mudah mati jika salah posisi.')">
-            <div class="role-icon assassin">🗡️</div>
-            <h3>Assassin</h3>
-            <p>Burst damage tinggi, spesialis membunuh satu target.</p>
-          </div>
-          <div class="role-card" onclick="triggerToast('success','Support','Pahlawan tanpa tanda jasa — sangat penting untuk tim!')">
-            <div class="role-icon support">💊</div>
-            <h3>Support</h3>
-            <p>Penyokong tim dengan heal, shield, dan crowd control.</p>
-          </div>
+        <div class="role-card" onclick="showHeroModal('mage','🔮','Mage','Penyihir dengan damage area besar, cocok untuk teamfight.','Damage besar di area, mematikan dalam teamfight. Jaga jarak dari musuh!')">
+          <div class="role-icon mage">🔮</div><h3>Mage</h3><p>Penyihir dengan damage area besar, cocok untuk teamfight.</p>
         </div>
-      </section>
-
-      <!-- FITUR GAME -->
-      <section class="section-block">
-        <div class="section-label"><h2>Fitur Unggulan Game</h2></div>
-        <p>
-          MLBB terus berinovasi menghadirkan fitur-fitur yang membuat pengalaman bermain
-          semakin menarik dan kompetitif:
-        </p>
-        <ul class="feature-list">
-          <li>Mode Ranked System dengan 7 tingkatan dari Warrior hingga Mythical Glory</li>
-          <li>Draft Pick System untuk mode kompetitif layaknya turnamen profesional</li>
-          <li>Magic Chess — mode auto-battler yang menghadirkan variasi strategi berbeda</li>
-          <li>Custom Match untuk bermain bersama teman dengan pengaturan bebas</li>
-          <li>Live Esports Streaming terintegrasi langsung dalam aplikasi</li>
-          <li>Hero Trial setiap minggu — coba hero baru sebelum membeli</li>
-          <li>Sistem Guild dan Social yang mempererat komunitas pemain</li>
-        </ul>
-      </section>
-
-      <!-- TIPS -->
-      <section class="section-block" id="tips">
-        <div class="section-label"><h2>Tips untuk Pemain Baru</h2></div>
-        <p>
-          Memulai perjalanan di Mobile Legends bisa terasa menantang. Berikut panduan
-          praktis agar Anda bisa berkembang lebih cepat:
-        </p>
-        <div class="tips-box">
-          <div class="tips-box-title">
-            <div class="tips-icon">★</div>
-            Strategi Dasar Menuju Ranked Tinggi
-          </div>
-          <ul>
-            <li>Kuasai 2–3 hero terlebih dahulu sebelum mencoba semua hero</li>
-            <li>Selalu komunikasikan posisi musuh menggunakan fitur mini-map ping</li>
-            <li>Prioritaskan Lord dan Turtle untuk mendapatkan keunggulan objektif</li>
-            <li>Pahami counter pick — pilih hero yang kuat melawan hero lawan</li>
-            <li>Jangan tinggalkan lane terlalu lama tanpa alasan yang jelas</li>
-            <li>Tonton replay pertandingan untuk menganalisis kesalahan sendiri</li>
-          </ul>
+        <div class="role-card" onclick="showHeroModal('marksman','🏹','Marksman','Damage fisik jarak jauh, andalan dalam late game.','Sabar dan posisikan diri dengan baik. Kekuatan sejati muncul di late game!')">
+          <div class="role-icon marksman">🏹</div><h3>Marksman</h3><p>Damage fisik jarak jauh, andalan dalam late game.</p>
         </div>
-        <p>
-          Konsistensi adalah kunci. Pemain yang fokus pada satu atau dua role akan
-          berkembang jauh lebih pesat dibanding pemain yang mencoba semua role sekaligus.
-        </p>
-      </section>
-
-      <!-- TIER LIST -->
-      <section class="section-block" id="tier">
-        <div class="section-label"><h2>Tier List Hero — Season Terkini</h2></div>
-        <p>
-          Berdasarkan win rate dan pick rate kompetitif, berikut posisi beberapa hero
-          populer di meta season ini:
-        </p>
-        <table class="tier-table">
-          <thead>
-            <tr>
-              <th>Hero</th>
-              <th>Peran</th>
-              <th>Tier</th>
-              <th>Win Rate</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr onclick="triggerToast('warning','Chou','Salah satu fighter paling serbaguna di meta ini!')">
-              <td><strong>Chou</strong></td>
-              <td>Fighter / Roamer</td>
-              <td><span class="badge badge-s">S Tier</span></td>
-              <td>54.2%</td>
-            </tr>
-            <tr onclick="triggerToast('warning','Esmeralda','Sulit di-counter karena shield yang sangat besar.')">
-              <td><strong>Esmeralda</strong></td>
-              <td>Tank / Mage</td>
-              <td><span class="badge badge-s">S Tier</span></td>
-              <td>53.8%</td>
-            </tr>
-            <tr onclick="triggerToast('info','Ling','Mobilitas tinggi, butuh mekanik yang baik untuk dimainkan.')">
-              <td><strong>Ling</strong></td>
-              <td>Assassin</td>
-              <td><span class="badge badge-a">A Tier</span></td>
-              <td>51.5%</td>
-            </tr>
-            <tr onclick="triggerToast('info','Valentina','Bisa menyalin ultimate musuh — sangat fleksibel!')">
-              <td><strong>Valentina</strong></td>
-              <td>Mage</td>
-              <td><span class="badge badge-a">A Tier</span></td>
-              <td>50.9%</td>
-            </tr>
-            <tr onclick="triggerToast('info','Beatrix','Empat mode senjata yang berbeda untuk situasi berbeda.')">
-              <td><strong>Beatrix</strong></td>
-              <td>Marksman</td>
-              <td><span class="badge badge-a">A Tier</span></td>
-              <td>50.1%</td>
-            </tr>
-            <tr onclick="triggerToast('success','Angela','Support terbaik untuk pemula, ultimate-nya sangat powerfull!')">
-              <td><strong>Angela</strong></td>
-              <td>Support</td>
-              <td><span class="badge badge-b">B Tier</span></td>
-              <td>48.7%</td>
-            </tr>
-          </tbody>
-        </table>
-        <p style="font-size:0.85rem; color:#6B84B0; margin-top: -0.5rem;">
-          * Klik baris hero untuk info singkat. Tier list dapat berubah seiring update patch terbaru.
-        </p>
-      </section>
-
-    </article>
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-
-      <!-- Rating -->
-      <div class="sidebar-card">
-        <div class="sidebar-card-head">
-          <div class="sidebar-card-head-icon">★</div>
-          <h3>Penilaian Redaksi</h3>
+        <div class="role-card" onclick="showHeroModal('fighter','⚔️','Fighter','Seimbang antara serangan dan pertahanan, serbaguna.','Fleksibel, bisa masuk ke lane manapun. Pilihan tepat untuk pemula!')">
+          <div class="role-icon fighter">⚔️</div><h3>Fighter</h3><p>Seimbang antara serangan dan pertahanan, serbaguna.</p>
         </div>
-        <div class="sidebar-card-body">
-          <div class="rating-box">
-            <div class="rating-score">9.2</div>
-            <div class="stars">
-              <div class="star"></div>
-              <div class="star"></div>
-              <div class="star"></div>
-              <div class="star"></div>
-              <div class="star half"></div>
-            </div>
-            <div class="rating-label">dari 10 — Sangat Direkomendasikan</div>
-          </div>
+        <div class="role-card" onclick="showHeroModal('assassin','🗡️','Assassin','Burst damage tinggi, spesialis membunuh satu target.','Hati-hati! Mudah mati jika salah posisi. Masuk cepat, keluar cepat!')">
+          <div class="role-icon assassin">🗡️</div><h3>Assassin</h3><p>Burst damage tinggi, spesialis membunuh satu target.</p>
+        </div>
+        <div class="role-card" onclick="showHeroModal('support','💊','Support','Penyokong tim dengan heal, shield, dan crowd control.','Pahlawan tanpa tanda jasa — sangat penting untuk tim. Prioritas jaga carry!')">
+          <div class="role-icon support">💊</div><h3>Support</h3><p>Penyokong tim dengan heal, shield, dan crowd control.</p>
         </div>
       </div>
+    </section>
 
-      <!-- Quick Facts -->
-      <div class="sidebar-card">
-        <div class="sidebar-card-head">
-          <div class="sidebar-card-head-icon">ℹ</div>
-          <h3>Info Cepat</h3>
-        </div>
-        <div class="sidebar-card-body">
-          <div class="fact-row"><span class="fact-key">Developer</span><span class="fact-val">Moonton</span></div>
-          <div class="fact-row"><span class="fact-key">Rilis</span><span class="fact-val">Juli 2016</span></div>
-          <div class="fact-row"><span class="fact-key">Genre</span><span class="fact-val">MOBA</span></div>
-          <div class="fact-row"><span class="fact-key">Platform</span><span class="fact-val">iOS / Android</span></div>
-          <div class="fact-row"><span class="fact-key">Harga</span><span class="fact-val">Free to Play</span></div>
-          <div class="fact-row"><span class="fact-key">Rating ESRB</span><span class="fact-val">Teen (13+)</span></div>
-          <div class="fact-row"><span class="fact-key">Ukuran App</span><span class="fact-val">~2.5 GB</span></div>
-        </div>
-      </div>
+    <section class="section-block">
+      <div class="section-label"><h2>Fitur Unggulan Game</h2></div>
+      <p>MLBB terus berinovasi menghadirkan fitur-fitur yang membuat pengalaman bermain semakin menarik dan kompetitif:</p>
+      <ul class="feature-list">
+        <li>Mode Ranked System dengan 7 tingkatan dari Warrior hingga Mythical Glory</li>
+        <li>Draft Pick System untuk mode kompetitif layaknya turnamen profesional</li>
+        <li>Magic Chess — mode auto-battler yang menghadirkan variasi strategi berbeda</li>
+        <li>Custom Match untuk bermain bersama teman dengan pengaturan bebas</li>
+        <li>Live Esports Streaming terintegrasi langsung dalam aplikasi</li>
+        <li>Hero Trial setiap minggu — coba hero baru sebelum membeli</li>
+        <li>Sistem Guild dan Social yang mempererat komunitas pemain</li>
+      </ul>
+    </section>
 
-      <!-- TOC -->
-      <div class="sidebar-card">
-        <div class="sidebar-card-head">
-          <div class="sidebar-card-head-icon">≡</div>
-          <h3>Daftar Isi</h3>
-        </div>
-        <div class="sidebar-card-body">
-          <ul class="toc-list">
-            <li><a href="#tentang"><span class="toc-num">1</span>Apa Itu Mobile Legends?</a></li>
-            <li><a href="#hero-list"><span class="toc-num">2</span>Peran Hero dalam Permainan</a></li>
-            <li><a href="#tentang"><span class="toc-num">3</span>Fitur Unggulan Game</a></li>
-            <li><a href="#tips"><span class="toc-num">4</span>Tips untuk Pemain Baru</a></li>
-            <li><a href="#tier"><span class="toc-num">5</span>Tier List Hero Terkini</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- CTA Download -->
-      <div class="cta-download">
-        <p style="color: var(--blue-pale); font-size: 0.85rem; margin-bottom: 0.75rem; line-height: 1.5;">
-          Sudah siap terjun ke medan pertempuran?
-        </p>
-        <h3 style="color: var(--white); font-size: 1rem; margin-bottom: 1rem;">Download Sekarang!</h3>
-        <a href="https://www.mobilelegends.com" target="_blank" rel="noopener" class="btn-primary"
-           onclick="triggerToast('success','App Store','Menuju halaman unduhan App Store...')">
-          App Store
-        </a>
-        <a href="https://www.mobilelegends.com" target="_blank" rel="noopener" class="btn-outline"
-           onclick="triggerToast('success','Google Play','Menuju halaman unduhan Google Play...')">
-          Google Play
-        </a>
-      </div>
-
-    </aside>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div>
-        <div class="footer-brand">⚔ MLBBArticle</div>
-        <p class="footer-desc">
-          Sumber informasi terpercaya untuk semua hal tentang Mobile Legends: Bang Bang.
-          Dari panduan hero, tier list, hingga berita turnamen esports terkini.
-        </p>
-      </div>
-      <div class="footer-links">
-        <h4>Navigasi</h4>
+    <section class="section-block" id="tips">
+      <div class="section-label"><h2>Tips untuk Pemain Baru</h2></div>
+      <p>Memulai perjalanan di Mobile Legends bisa terasa menantang. Berikut panduan praktis agar Anda bisa berkembang lebih cepat:</p>
+      <div class="tips-box">
+        <div class="tips-box-title"><div class="tips-icon">★</div>Strategi Dasar Menuju Ranked Tinggi</div>
         <ul>
-          <li><a href="#tentang">Tentang Game</a></li>
-          <li><a href="#hero-list">Panduan Hero</a></li>
-          <li><a href="#tips">Tips & Trik</a></li>
-          <li><a href="#tier">Tier List</a></li>
+          <li>Kuasai 2–3 hero terlebih dahulu sebelum mencoba semua hero</li>
+          <li>Selalu komunikasikan posisi musuh menggunakan fitur mini-map ping</li>
+          <li>Prioritaskan Lord dan Turtle untuk mendapatkan keunggulan objektif</li>
+          <li>Pahami counter pick — pilih hero yang kuat melawan hero lawan</li>
+          <li>Jangan tinggalkan lane terlalu lama tanpa alasan yang jelas</li>
+          <li>Tonton replay pertandingan untuk menganalisis kesalahan sendiri</li>
+        </ul>
+      </div>
+      <p>Konsistensi adalah kunci. Pemain yang fokus pada satu atau dua role akan berkembang jauh lebih pesat dibanding pemain yang mencoba semua role sekaligus.</p>
+    </section>
+
+    <section class="section-block" id="tier">
+      <div class="section-label"><h2>Tier List Hero — Season Terkini</h2></div>
+      <p>Berdasarkan win rate dan pick rate kompetitif, berikut posisi beberapa hero populer di meta season ini:</p>
+      <table class="tier-table">
+        <thead><tr><th>Hero</th><th>Peran</th><th>Tier</th><th>Win Rate</th></tr></thead>
+        <tbody>
+          <tr onclick="triggerToast('warning','Chou','Salah satu fighter paling serbaguna di meta ini!')"><td><strong>Chou</strong></td><td>Fighter / Roamer</td><td><span class="badge badge-s">S Tier</span></td><td>54.2%</td></tr>
+          <tr onclick="triggerToast('warning','Esmeralda','Sulit di-counter karena shield yang sangat besar.')"><td><strong>Esmeralda</strong></td><td>Tank / Mage</td><td><span class="badge badge-s">S Tier</span></td><td>53.8%</td></tr>
+          <tr onclick="triggerToast('info','Ling','Mobilitas tinggi, butuh mekanik yang baik untuk dimainkan.')"><td><strong>Ling</strong></td><td>Assassin</td><td><span class="badge badge-a">A Tier</span></td><td>51.5%</td></tr>
+          <tr onclick="triggerToast('info','Valentina','Bisa menyalin ultimate musuh — sangat fleksibel!')"><td><strong>Valentina</strong></td><td>Mage</td><td><span class="badge badge-a">A Tier</span></td><td>50.9%</td></tr>
+          <tr onclick="triggerToast('info','Beatrix','Empat mode senjata yang berbeda untuk situasi berbeda.')"><td><strong>Beatrix</strong></td><td>Marksman</td><td><span class="badge badge-a">A Tier</span></td><td>50.1%</td></tr>
+          <tr onclick="triggerToast('success','Angela','Support terbaik untuk pemula, ultimate-nya sangat powerfull!')"><td><strong>Angela</strong></td><td>Support</td><td><span class="badge badge-b">B Tier</span></td><td>48.7%</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:0.85rem;color:#6B84B0;margin-top:-0.5rem;">* Klik baris hero untuk info singkat. Tier list dapat berubah seiring update patch terbaru.</p>
+    </section>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-card-head"><div class="sidebar-card-head-icon">★</div><h3>Penilaian Redaksi</h3></div>
+      <div class="sidebar-card-body">
+        <div class="rating-box">
+          <div class="rating-score">9.2</div>
+          <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star half"></div></div>
+          <div class="rating-label">dari 10 — Sangat Direkomendasikan</div>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-card">
+      <div class="sidebar-card-head"><div class="sidebar-card-head-icon">ℹ</div><h3>Info Cepat</h3></div>
+      <div class="sidebar-card-body">
+        <div class="fact-row"><span class="fact-key">Developer</span><span class="fact-val">Moonton</span></div>
+        <div class="fact-row"><span class="fact-key">Rilis</span><span class="fact-val">Juli 2016</span></div>
+        <div class="fact-row"><span class="fact-key">Genre</span><span class="fact-val">MOBA</span></div>
+        <div class="fact-row"><span class="fact-key">Platform</span><span class="fact-val">iOS / Android</span></div>
+        <div class="fact-row"><span class="fact-key">Harga</span><span class="fact-val">Free to Play</span></div>
+        <div class="fact-row"><span class="fact-key">Rating ESRB</span><span class="fact-val">Teen (13+)</span></div>
+        <div class="fact-row"><span class="fact-key">Ukuran App</span><span class="fact-val">~2.5 GB</span></div>
+      </div>
+    </div>
+    <div class="sidebar-card">
+      <div class="sidebar-card-head"><div class="sidebar-card-head-icon">≡</div><h3>Daftar Isi</h3></div>
+      <div class="sidebar-card-body">
+        <ul class="toc-list">
+          <li><a href="#tentang"><span class="toc-num">1</span>Apa Itu Mobile Legends?</a></li>
+          <li><a href="#hero-list"><span class="toc-num">2</span>Peran Hero dalam Permainan</a></li>
+          <li><a href="#tentang"><span class="toc-num">3</span>Fitur Unggulan Game</a></li>
+          <li><a href="#tips"><span class="toc-num">4</span>Tips untuk Pemain Baru</a></li>
+          <li><a href="#tier"><span class="toc-num">5</span>Tier List Hero Terkini</a></li>
         </ul>
       </div>
     </div>
-    <div class="footer-copy">
-      <span>© 2025 MLBBArticle. Artikel ini dibuat untuk tujuan edukasi.</span>
-      <span>Mobile Legends® adalah merek dagang Moonton.</span>
+    <div class="cta-download">
+      <p style="color:var(--blue-pale);font-size:0.85rem;margin-bottom:0.75rem;line-height:1.5;">Sudah siap terjun ke medan pertempuran?</p>
+      <h3 style="color:var(--white);font-size:1rem;margin-bottom:1rem;">Download Sekarang!</h3>
+      <a href="https://www.mobilelegends.com" target="_blank" rel="noopener" class="btn-primary" onclick="triggerToast('success','App Store','Menuju halaman unduhan App Store...')">App Store</a>
+      <a href="https://www.mobilelegends.com" target="_blank" rel="noopener" class="btn-outline" onclick="triggerToast('success','Google Play','Menuju halaman unduhan Google Play...')">Google Play</a>
     </div>
-  </footer>
+  </aside>
+</main>
 
-  <script>
-    const ICONS = { success: '✓', warning: '!', error: '✕', info: 'i' };
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">⚔ MLBBArticle</div>
+      <p class="footer-desc">Sumber informasi terpercaya untuk semua hal tentang Mobile Legends: Bang Bang. Dari panduan hero, tier list, hingga berita turnamen esports terkini.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Navigasi</h4>
+      <ul>
+        <li><a href="#tentang">Tentang Game</a></li>
+        <li><a href="#hero-list">Panduan Hero</a></li>
+        <li><a href="#tips">Tips & Trik</a></li>
+        <li><a href="#tier">Tier List</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    <span>© 2025 MLBBArticle. Artikel ini dibuat untuk tujuan edukasi.</span>
+    <span>Mobile Legends® adalah merek dagang Moonton.</span>
+  </div>
+</footer>
 
-    function triggerToast(type, title, msg) {
-      const container = document.getElementById('toast-container');
-      const toast = document.createElement('div');
-      toast.className = `toast toast-${type}`;
-      toast.innerHTML = `
-        <div class="toast-icon">${ICONS[type] || 'i'}</div>
-        <div class="toast-body">
-          <div class="toast-title">${title}</div>
-          <div class="toast-msg">${msg}</div>
-        </div>
-      `;
-      container.appendChild(toast);
-      setTimeout(() => toast.remove(), 4000);
-    }
+<script>
+  const ICONS = {success:'✓',warning:'!',error:'✕',info:'i'};
 
-    // Welcome toast on page load
-    window.addEventListener('load', () => {
-      setTimeout(() => triggerToast('info', 'Selamat Datang!', 'Klik hero atau menu untuk info lebih lanjut.'), 600);
+  function triggerToast(type,title,msg){
+    const container=document.getElementById('toast-container');
+    const toast=document.createElement('div');
+    toast.className=`toast toast-${type}`;
+    toast.innerHTML=`<div class="toast-icon">${ICONS[type]||'i'}</div><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div>`;
+    container.appendChild(toast);
+    setTimeout(()=>toast.remove(),4000);
+  }
+
+  // === HERO MODAL — anti-spam ===
+  let modalOpen = false;
+
+  function showHeroModal(roleClass, icon, title, desc, tip) {
+    if (modalOpen) return;
+    modalOpen = true;
+
+    document.getElementById('modal-icon-wrap').className = 'modal-role-icon-wrap ' + roleClass;
+    document.getElementById('modal-icon-wrap').textContent = icon;
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('hero-modal-desc').textContent = desc;
+    document.getElementById('modal-tip-text').textContent = tip;
+
+    const overlay = document.getElementById('hero-modal-overlay');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeHeroModal() {
+    const overlay = document.getElementById('hero-modal-overlay');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    modalOpen = false;
+  }
+
+  document.getElementById('hero-modal-overlay').addEventListener('click', function(e){
+    if (e.target === this) closeHeroModal();
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeHeroModal();
+  });
+
+  // Welcome toast
+  window.addEventListener('load', () => {
+    setTimeout(()=>triggerToast('info','Selamat Datang!','Klik kartu hero untuk info detail peran.'),600);
+  });
+
+  // Scroll toasts
+  const sectionToasts = {
+    'hero-list':['info','Panduan Hero','Klik kartu hero untuk melihat detail perannya!'],
+    'tips':['success','Tips & Strategi','Konsistensi adalah kunci naik rank!'],
+    'tier':['warning','Tier List','Data berubah tiap patch — selalu pantau meta!'],
+  };
+  const triggered = new Set();
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting && !triggered.has(e.target.id)){
+        triggered.add(e.target.id);
+        const t=sectionToasts[e.target.id];
+        if(t) setTimeout(()=>triggerToast(...t),300);
+      }
     });
-
-    // Scroll-based section toasts (once per section)
-    const sectionToasts = {
-      'hero-list': ['info', 'Panduan Hero', 'Ada 6 peran hero — pilih yang sesuai gaya mainmu!'],
-      'tips':      ['success', 'Tips & Strategi', 'Konsistensi adalah kunci naik rank!'],
-      'tier':      ['warning', 'Tier List', 'Data berubah tiap patch — selalu pantau meta!'],
-    };
-    const triggered = new Set();
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting && !triggered.has(e.target.id)) {
-          triggered.add(e.target.id);
-          const t = sectionToasts[e.target.id];
-          if (t) setTimeout(() => triggerToast(...t), 300);
-        }
-      });
-    }, { threshold: 0.3 });
-
-    document.querySelectorAll('#hero-list, #tips, #tier').forEach(el => observer.observe(el));
-  </script>
+  },{threshold:0.3});
+  document.querySelectorAll('#hero-list,#tips,#tier').forEach(el=>observer.observe(el));
+</script>
 </body>
 </html>
