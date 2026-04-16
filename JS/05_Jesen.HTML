@@ -1,38 +1,48 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Form Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan DOM Vanilla JS</title>
+    <style>
+        /* Styling sederhana agar tampilan mirip dengan gambar di papan tulis */
+        body { font-family: sans-serif; display: flex; justify-content: center; padding-top: 50px; }
+        .container { border: 2px solid black; padding: 20px; width: 300px; }
+        .input-group { margin-bottom: 10px; }
+        label { display: inline-block; width: 80px; }
+        button { margin-right: 5px; cursor: pointer; }
+    </style>
 </head>
 <body>
 
-    <h2>Form Login</h2>
+    <div class="container">
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" id="US">
+        </div>
 
-    <label>Username:</label><br>
-    <input type="text" id="username"><br><br>
+        <div class="input-group">
+            <label>Sandi</label>
+            <input type="password" id="S">
+        </div>
 
-    <label>Password:</label><br>
-    <input type="password" id="password"><br><br>
-
-    <button id="btnLogin">Submit</button>
+        <button id="BtnLogin">Login</button>
+        <button id="BtnCancel">Cancel</button>
+    </div>
 
     <script>
-        // DOM Selector
-        let btnLogin = document.getElementById("btnLogin");
-        let username = document.getElementById("username");
-        let password = document.getElementById("password");
+        // 1. DOM Selector (Mengambil elemen dari HTML)
+        const btnLogin = document.getElementById('BtnLogin');
+        const US = document.getElementById('US');
 
-        // Event Listener
-        btnLogin.addEventListener("click", function() {
-            let user = username.value;
-            let pass = password.value;
+        // 2. Event Listener (Menunggu aksi klik)
+        // Ketika btnLogin diklik, jalankan fungsi jalankanAngka
+        btnLogin.addEventListener('click', jalankanAngka);
 
-            if(user === "" || pass === "") {
-                alert("Username dan Password harus diisi!");
-            } else {
-                alert("Username: " + user + "\nPassword: " + pass);
-            }
-        });
+        function jalankanAngka() {
+            // Mengubah value dari input US menjadi "username"
+            US.value = "Username";
+        }
     </script>
 
 </body>
