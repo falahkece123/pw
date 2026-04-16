@@ -12,16 +12,6 @@ HTML (HyperText Markup Language) digunakan untuk menyusun struktur halaman, sepe
 CSS (Cascading Style Sheets) digunakan untuk mengatur tampilan visual, seperti warna, ukuran huruf, tata letak, margin, animasi, dan desain responsif.
 JavaScript digunakan untuk mengatur logika program dan menambahkan interaksi pada halaman web.
 
-Secara sederhana, HTML dapat diibaratkan sebagai kerangka bangunan, CSS sebagai cat dan dekorasi, sedangkan JavaScript sebagai sistem listrik dan mesin yang membuat bangunan berfungsi.E: Explanation (Penjelasan Rinci)
-
-1. Hubungan HTML, CSS, dan JavaScript
-
-Papan tulis menunjukkan konsep dasar bahwa website tersusun dari tiga komponen utama, yaitu HTML, CSS, dan JavaScript. Ketiganya memiliki peran berbeda namun saling melengkapi.
-
-HTML (HyperText Markup Language) digunakan untuk menyusun struktur halaman, seperti judul, paragraf, gambar, tombol, tabel, dan form input.
-CSS (Cascading Style Sheets) digunakan untuk mengatur tampilan visual, seperti warna, ukuran huruf, tata letak, margin, animasi, dan desain responsif.
-JavaScript digunakan untuk mengatur logika program dan menambahkan interaksi pada halaman web.
-
 Secara sederhana, HTML dapat diibaratkan sebagai kerangka bangunan, CSS sebagai cat dan dekorasi, sedangkan JavaScript sebagai sistem listrik dan mesin yang membuat bangunan berfungsi.2. Pengertian DOM (Document Object Model)
 
 DOM adalah representasi dokumen HTML dalam bentuk struktur objek yang dibentuk browser ketika halaman dibuka. Setiap elemen HTML seperti <div>, <p>, <button>, dan <input> akan dianggap sebagai objek yang dapat diakses oleh JavaScript.
