@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Login</title>
+</head>
+<body>
 
+    <h2>Form Login</h2>
+
+    <label>Username:</label><br>
+    <input type="text" id="username"><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" id="password"><br><br>
+
+    <button id="btnLogin">Submit</button>
+
+    <script>
+        // DOM Selector
+        let btnLogin = document.getElementById("btnLogin");
+        let username = document.getElementById("username");
+        let password = document.getElementById("password");
+
+        // Event Listener
+        btnLogin.addEventListener("click", function() {
+            let user = username.value;
+            let pass = password.value;
+
+            if(user === "" || pass === "") {
+                alert("Username dan Password harus diisi!");
+            } else {
+                alert("Username: " + user + "\nPassword: " + pass);
+            }
+        });
+    </script>
+
+</body>
+</html>
