@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Sederhana</title>
+</head>
+<body>
 
+    <h2>Form Login</h2>
+
+    <label>Username:</label><br>
+    <input type="text" id="us"><br><br>
+
+    <label>Sandi:</label><br>
+    <input type="password" id="s"><br><br>
+
+    <button id="Btnlogin">Login</button>
+    <button id="Btncancel">Cancel</button>
+
+    <p id="output"></p>
+
+    <script>
+        const usernameInput = document.getElementById("us");
+        const passwordInput = document.getElementById("s");
+        const btnLogin = document.getElementById("Btnlogin");
+        const btnCancel = document.getElementById("Btncancel");
+        const output = document.getElementById("output");
+
+        // Saat klik login
+        btnLogin.addEventListener("click", function () {
+            let username = usernameInput.value;
+            let password = passwordInput.value;
+
+            if (username !== "" && password !== "") {
+                // Simpan ke localStorage
+                localStorage.setItem("username", username);
+                localStorage.setItem("password", password);
+
+                output.textContent = "Data berhasil disimpan!";
+            } else {
+                // Ambil username terakhir
+                let lastUsername = localStorage.getItem("username");
+
+                if (lastUsername) {
+                    output.textContent = "Username terakhir: " + lastUsername;
+                } else {
+                    output.textContent = "Belum ada data tersimpan.";
+                }
+            }
+        });
+
+        // Saat klik cancel
+        btnCancel.addEventListener("click", function () {
+            usernameInput.value = "";
+            passwordInput.value = "";
+            output.textContent = "Form dibersihkan.";
+        });
+    </script>
+
+</body>
+</html>
