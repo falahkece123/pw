@@ -17,6 +17,7 @@ Mengubah isi teks
 Mengubah style atau atribut
 Menambah atau menghapus elemen
 Mengambil data dari input pengguna
+
 A. DOM Selector: Memilih Elemen
 
 Sebelum elemen diubah, JavaScript harus memilih elemen tersebut menggunakan selector.
@@ -28,6 +29,7 @@ Lebih fleksibel karena dapat memilih elemen berdasarkan:
 Class (.)
 ID (#)
 Tag HTML (div, p, h1, dll)
+
 B. Event Listener: Menangani Aksi
 
 Setelah elemen ditemukan, JavaScript dapat memberikan event listener untuk mendeteksi aksi pengguna.
