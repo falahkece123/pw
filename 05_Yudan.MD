@@ -39,7 +39,8 @@ mengetik input
 perubahan data
 hover mouse
 
-Saat event terjadi, JavaScript akan menjalankan fungsi tertentu.C. Pengambilan Data (Value)
+Saat event terjadi, JavaScript akan menjalankan fungsi tertentu.
+C. Pengambilan Data (Value)
 
 JavaScript dapat mengambil nilai dari input pengguna, misalnya teks pada kolom form, lalu memproses data tersebut sesuai kebutuhan program.
 
