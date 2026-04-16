@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan DOM Vanilla JS</title>
+    <style>
+        /* Styling sederhana agar tampilan mirip dengan gambar di papan tulis */
+        body { font-family: sans-serif; display: flex; justify-content: center; padding-top: 50px; }
+        .container { border: 2px solid black; padding: 20px; width: 300px; }
+        .input-group { margin-bottom: 10px; }
+        label { display: inline-block; width: 80px; }
+        button { margin-right: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" id="US">
+        </div>
+
+        <div class="input-group">
+            <label>Sandi</label>
+            <input type="password" id="S">
+        </div>
+
+        <button id="BtnLogin">Login</button>
+        <button id="BtnCancel">Cancel</button>
+    </div>
+
+    <script>
+        // 1. DOM Selector (Mengambil elemen dari HTML)
+        const btnLogin = document.getElementById('BtnLogin');
+        const US = document.getElementById('US');
+
+        // 2. Event Listener (Menunggu aksi klik)
+        // Ketika btnLogin diklik, jalankan fungsi jalankanAngka
+        btnLogin.addEventListener('click', jalankanAngka);
+
+        function jalankanAngka() {
+            // Mengubah value dari input US menjadi "username"
+            US.value = "Username";
+        }
+    </script>
+
+</body>
+</html>
